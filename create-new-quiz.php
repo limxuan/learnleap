@@ -2,7 +2,6 @@
 session_start();
 if (!isset($_SESSION['lecturer_id'])) {
   header("Location: login.php");
-  echo "Bitch";
   exit;
 } else {
   $user_id = $_SESSION['lecturer_id'];

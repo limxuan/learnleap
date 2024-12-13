@@ -48,6 +48,7 @@ main {
 
 .backarrow {
   margin-bottom: 8px;
+  cursor: pointer;
 }
 
 .question-title {
