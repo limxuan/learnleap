@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+:root {
+  --dark-green: rgb(37, 133, 72);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-family: "Outfit", sans-serif;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+  height: 64px;
+  width: 100%;
+}
+
+main {
+  padding: 2em;
+}
+
+.container {
+  width: 600px;
+  height: 500px;
+  padding: 36px 0px;
+}
+
+.backarrow {
+  margin-bottom: 8px;
+}
+
+.question-title {
+  font-size: 28px;
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 100%; /* Ensure the container doesn't shrink */
+  height: auto;
+  gap: 15px;
+  margin: 24px 0;
+}
+
+.textarea-input {
+  height: auto;
+  width: 100%;
+  padding-inline: 28px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 50px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  vertical-align: top;
+  background: rgb(255, 255, 255);
+  overflow: hidden;
+  resize: none;
+  color: rgb(61, 62, 61);
+  font-family: "Outfit", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 20px;
+  border: 1px solid rgb(216, 224, 220);
+  line-height: 1.5;
+  transition: all 0.1s ease;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  word-wrap: break-word;
+}
+
+/* Auto-expanding the textarea */
+.textarea-input:focus {
+  outline: 3px solid rgb(216, 224, 220); /* Expands outside the border */
+  border: 1px solid rgb(216, 224, 220); /* Keeps the normal border */
+}
+
+/* Ensure margin doesn't collapse */
+.textarea-container {
+  margin-bottom: 10px; /* Keeps space between the container and other elements */
+}
+
+.btn {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-family: inherit;
+  margin: 0px;
+  overflow: visible;
+  text-transform: none;
+  appearance: none;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  transition-property: all;
+  transition-duration: 0.2s;
+  height: auto;
+  line-height: 32px;
+  border: none;
+  gap: 12px;
+  background: rgb(37, 133, 72);
+  color: rgb(255, 255, 255);
+  border-radius: 100px;
+  padding: 12px 24px;
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.7;
+  display: flex; /* This is fine */
+  cursor: not-allowed;
+}
+.btn-enabled {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.btn-enabled:hover {
+  background: rgb(30, 100, 50);
+}
+
+.input-section {
+  width: 100%;
+  .input-title {
+    margin-bottom: 8px;
+  }
+}
+
+/* Hide the default radio buttons */
+.radio-input {
+  display: none;
+}
+
+/* Style the labels as buttons */
+.radio-btn {
+  display: flex;
+  padding: 10px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: grey;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Change background color when radio button is selected */
+.radio-input:checked + .radio-btn {
+  background-color: rgb(38, 190, 90);
+}
+
+/* Add hover effect */
+.radio-btn:hover {
+  background-color: rgb(38, 200, 90);
+}
+
+/* Optional: Add focus style */
+.radio-input:focus + .radio-btn {
+  outline: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.visibility-btn-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 330px;
+    padding: 36px 0px;
+  }
+
+  .question-title {
+    font-size: 24px;
+  }
+
+  .textarea-input {
+    font-size: 20px;
+  }
+}
