@@ -1,0 +1,77 @@
+.btn {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-family: inherit;
+  margin: 0px;
+  overflow: visible;
+  text-transform: none;
+  appearance: none;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  transition-property: all;
+  transition-duration: 0.2s;
+  height: auto;
+  line-height: 32px;
+  border: none;
+  gap: 12px;
+  background: rgb(37, 133, 72);
+  color: rgb(255, 255, 255);
+  padding: 12px 24px;
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.7;
+  display: flex;
+  cursor: not-allowed;
+  border-radius: 100px;
+}
+.btn-enabled {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.btn-enabled:hover {
+  background: rgb(30, 100, 50);
+}
+
+.backarrow {
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.radio-input {
+  display: none;
+}
+
+.radio-btn {
+  display: flex;
+  padding: 10px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: grey;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.radio-input:checked + .radio-btn {
+  background-color: rgb(38, 190, 90);
+}
+
+.radio-btn:hover {
+  background-color: rgb(38, 200, 90);
+}
+
+.radio-input:focus + .radio-btn {
+  outline: 2px solid rgba(0, 0, 0, 0.2);
+}

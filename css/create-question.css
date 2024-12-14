@@ -1,0 +1,189 @@
+body {
+  background: #fff;
+  overflow-x: hidden;
+}
+
+.container {
+  margin-top: 28px;
+  width: 600px;
+}
+
+.header-container {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.header-button-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-create-button-container {
+  display: flex;
+  flex-direction: 8px;
+  gap: 10px;
+  align-items: center;
+  padding: 4px 12px;
+  opacity: 0.6;
+  border-radius: 10px;
+
+  p {
+    color: #fff;
+  }
+}
+
+.header-button-text {
+  font-size: 20px;
+  color: #6a6b6a;
+  cursor: pointer;
+}
+
+.header-button-text:hover {
+  text-decoration: underline;
+}
+
+.question-type-container {
+  margin-top: 30px;
+}
+
+.question-type-btn-container {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-btn.question-radio-btn {
+  background: #eef0ef;
+  border-radius: 50px;
+  color: #6a6b6a;
+  box-shadow: none;
+  font-size: 14px;
+  padding: 8px 14px;
+  font-weight: 400;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.radio-btn.question-radio-btn:hover {
+  background-color: #989999;
+  color: black;
+}
+
+.radio-input:checked + .radio-btn {
+  color: #fff;
+  background-color: rgb(38, 190, 90);
+}
+
+.question-form-container {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  padding-inline: 24px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  box-shadow:
+    rgba(6, 38, 6, 0.04) 0px 8px 32px 0px,
+    rgba(6, 38, 6, 0.09) 1px 2px 4px 0px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(225, 235, 229);
+}
+
+.question-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0px;
+  p {
+    font-size: 14px;
+    color: #696a69;
+  }
+}
+
+.input-textarea {
+  width: 100%;
+  height: auto;
+  border: none;
+  outline: none;
+  resize: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  padding: 0;
+  overflow: hidden;
+}
+
+.form-divider {
+  opacity: 0.6;
+  border-width: 0px 0px 1px;
+  border-image: initial;
+  border-color: rgb(225, 235, 229);
+  border-style: solid;
+  width: 100%;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.true-false-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 8px 0px;
+  .radio-btn.question-radio-btn {
+    background: grey;
+    border-radius: 50px;
+    color: #6a6b6a;
+    box-shadow: none;
+    font-size: 14px;
+    padding: 8px 14px;
+    font-weight: 400;
+    transition:
+      background 0.3s ease,
+      color 0.3s ease;
+  }
+  .radio-btn.question-radio-btn:hover {
+    background-color: #989999;
+    color: black;
+  }
+
+  .radio-input:checked + .radio-btn {
+    color: #fff;
+    background-color: rgb(38, 190, 90);
+  }
+
+  p {
+    font-size: 14px;
+    color: #fff;
+  }
+}
+
+.create-question-button-enabled {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.create-question-button-enabled:hover {
+  background: rgb(30, 100, 50);
+}
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+}

@@ -1,0 +1,95 @@
+.container {
+  width: 600px;
+  height: 500px;
+  padding: 36px 0px;
+}
+
+.title {
+  font-size: 28px;
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 100%; /* Ensure the container doesn't shrink */
+  height: auto;
+  gap: 15px;
+  margin: 24px 0;
+}
+
+.textarea-input {
+  height: auto;
+  width: 100%;
+  padding-inline: 28px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 50px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  vertical-align: top;
+  background: rgb(255, 255, 255);
+  overflow: hidden;
+  resize: none;
+  color: rgb(61, 62, 61);
+  font-family: "Outfit", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 20px;
+  border: 1px solid rgb(216, 224, 220);
+  line-height: 1.5;
+  transition: all 0.1s ease;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  word-wrap: break-word;
+}
+
+/* Auto-expanding the textarea */
+.textarea-input:focus {
+  outline: 3px solid rgb(216, 224, 220); /* Expands outside the border */
+  border: 1px solid rgb(216, 224, 220); /* Keeps the normal border */
+}
+
+/* Ensure margin doesn't collapse */
+.textarea-container {
+  margin-bottom: 10px; /* Keeps space between the container and other elements */
+}
+
+.input-section {
+  width: 100%;
+  .input-title {
+    margin-bottom: 8px;
+  }
+}
+
+.visibility-btn-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  margin: 10px 0px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 330px;
+    padding: 36px 0px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .textarea-input {
+    font-size: 20px;
+  }
+}

@@ -1,6 +1,0 @@
-vim.lsp.buf.format({
-    filter = function(client)
-        print("Formatter:", client.name)
-        return true -- This allows the formatter to run
-    end
-})

@@ -1,30 +1,16 @@
 <?php
-include_once 'db_config.php';
+include_once 'database.php';
 session_start();
 if (isset($_GET['quiz_id'])) {
     $quizId = $_GET['quiz_id'];  // Access the 'id' query parameter
     $lecturerId = $_SESSION['lecturer_id'];
-    $conn = Database::getConnection();
-    try {
-        $sql = "SELECT quiz_name FROM `Quiz` WHERE quiz_id = :quiz_id and lecturer_id = :lecturer_id";
-
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':quiz_id', $quizId, PDO::PARAM_INT);
-        $stmt->bindParam(':lecturer_id', $lecturerId, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            echo "yessir";
-            $quizName = $result['quiz_name'];
-            echo "Editing: $quizName";
-        } else {
-            echo "Quiz not found.";
-        }
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    $quiz = Database::getQuizById($quizId, $lecturerId);
+    if (!$quiz) {
+        echo "Quiz not found.";
+        exit();
     }
+    $questions = Database::getQuestionsForQuiz($quizId);
+
 } else {
     header("Location: login.php");
     exit();
@@ -34,22 +20,40 @@ if (isset($_GET['quiz_id'])) {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Web Page</title>
-    <!-- External CSS file link (optional) -->
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>My Web Page</title>
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/edit-quiz.css">
+    </head>
 
-<body>
-    <?php include "navbar.php" ?>
-    <div class="content">
-            <div class="container">
-                
-        <h1>Skibidi is Editing: <?php echo $quizName ?></h1>
+    <body>
+        <?php include "navbar.php" ?>
+        <div class="content">
+            <div class="quiz-info-container">
+                <p class="quiz-title"><?php echo $quiz['quiz_name'] ?></p>
+                <p class="quiz-sub-title"><?php echo count($questions) ?> questions created</p>
             </div>
-    </div>
-</body>
+            <div class="questions-container">
+                <div class="questions-header">
+                    <p class="question-text">Questions</p>
+                    <div class="questions-actions">
+                        <div class="action-container">
+                            <span class="tooltip-text">Add a<br>question</span>
+                            <img class="add-question-icon tooltip-trigger" src="assets/add-question-icon.svg" alt="Add Question">
+                        </div>
+                    </div>
+                </div
+                
+            </div>
+        </div>
+        <script>
+            const addQuestionIcon = document.querySelector('.add-question-icon');
+            addQuestionIcon.addEventListener('click', () => {
+                window.location.href = 'create-question.php?quiz_id=' + <?php echo $quizId; ?>;
+            });
+        </script>
+    </body>
 </html>
