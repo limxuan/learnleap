@@ -1,4 +1,5 @@
 <?php
+
 // Include the database connection class
 require_once 'db_config.php';
 require_once 'utils.php';
@@ -19,7 +20,7 @@ if (isset($_POST['quiz-name']) && isset($_POST['quiz-description']) && isset($_P
     // Prepare the SQL query to insert the quiz data
     try {
         $sql = "INSERT INTO Quiz (lecturer_id, quiz_name, description, public_visibility, join_code, quiz_created_at) 
-                VALUES (:lecturer_id, :quiz_name, :quiz_description, :visibility, :join_code, :quiz_created_at)";
+        VALUES (:lecturer_id, :quiz_name, :quiz_description, :visibility, :join_code, :quiz_created_at)";
 
         // Prepare the statement
         $stmt = $conn->prepare($sql);
@@ -39,7 +40,12 @@ if (isset($_POST['quiz-name']) && isset($_POST['quiz-description']) && isset($_P
         // Execute the query
         $stmt->execute();
 
-        echo "New quiz added successfully!";
+        $quizId = $conn->lastInsertId();
+
+        echo "New quiz added successfully!" . $quizId;
+
+        header("Location: /edit-quiz.php?quiz_id=" . $quizId);
+        exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -47,4 +53,3 @@ if (isset($_POST['quiz-name']) && isset($_POST['quiz-description']) && isset($_P
 } else {
     echo "Form data is not set properly!";
 }
-?>
