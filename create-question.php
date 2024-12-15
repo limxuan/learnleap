@@ -18,7 +18,7 @@ if (isset($_GET['quiz_id'])) {
 <html lang="en">
   <head>
     <meta charset="UTF-7">
-    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Web Page</title>
     <link rel="stylesheet" href="css/base.css">
@@ -26,7 +26,6 @@ if (isset($_GET['quiz_id'])) {
     <link rel="stylesheet" href="css/create-question.css">
   </head>
   <body>
-
     <!-- Header Section -->
     <?php include_once 'navbar.php'; ?>
     <div class="container">
@@ -69,7 +68,6 @@ if (isset($_GET['quiz_id'])) {
             </div>
 
             <hr class="form-divider" />
-
             <div class="question-input-container">
               <p>ANSWER</p>
               <textarea name="answer" id="st-answer" class="input-textarea" placeholder="Add answer here"></textarea>

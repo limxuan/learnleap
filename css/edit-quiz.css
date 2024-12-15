@@ -1,5 +1,6 @@
 body {
   background-color: #fff;
+  overflow-x: hidden;
 }
 
 .quiz-info-container {
@@ -64,6 +65,68 @@ body {
   visibility: visible;
   opacity: 1;
   z-index: 99999999;
+}
+
+.questions-list-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  gap: 18px;
+}
+
+.question-section {
+  text-size-adjust: 100%;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  padding: 20px 24px;
+  background: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid rgb(225, 235, 229);
+  box-shadow: rgba(15, 78, 39, 0.08) 0px 2px 4px 0px;
+  margin-bottom: 0px;
+  transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease; /* Smooth transition for border and shadow */
+}
+
+.question-section:hover {
+  border-color: grey; /* Change border color on hover */
+}
+.correct-answer {
+  font-feature-settings: "kern";
+  cursor: pointer;
+  border-width: 0px;
+  border-style: solid;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  border-color: var(--chakra-colors-chakra-border-color);
+  display: flex;
+  padding: 0px 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.answer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0px;
+}
+
+.questions-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 768px) {

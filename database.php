@@ -102,7 +102,25 @@ class Database
     * */
     public static function getQuestionsForQuiz($quizId): array
     {
-        return ['heh', "hojo"];
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT * FROM `Questions` WHERE quiz_id = :quiz_id";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':quiz_id', $quizId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            // Fetch all questions for the given quiz_id
+            $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $questions;
+        } catch (PDOException $e) {
+            echo "Database Error in getQuestionsForQuiz: " . $e->getMessage();
+            throw new Exception("Failed to fetch questions. Please try again later.");
+        } catch (Exception $e) {
+            echo "General Error: " . $e->getMessage(); // Catch general errors
+            return [];
+        }
     }
 
     /*
@@ -119,7 +137,6 @@ class Database
     * */
     public static function saveQuestion($quizId, $question, $questionType, $correctAnswers, $wrongAnswers, $questionCreatedAt): int
     {
-        echo "save question called" . $quizId . $question . $questionType . $correctAnswers . $wrongAnswers . $questionCreatedAt;
         try {
             $conn = self::getConnection();
             $sql = "INSERT INTO `Questions` 
@@ -130,7 +147,6 @@ class Database
             $stmt = $conn->prepare($sql);
             $nullValue = null;
 
-            echo "Before bindParam.";
             $stmt->bindParam(':quiz_id', $quizId, PDO::PARAM_INT);
             $stmt->bindParam(':question_text', $question, PDO::PARAM_STR);
             $stmt->bindParam(':question_type', $questionType, PDO::PARAM_STR);
@@ -139,18 +155,7 @@ class Database
             $stmt->bindParam(':answer_percentage', $nullValue, PDO::PARAM_NULL);
             $stmt->bindParam(':question_created_at', $questionCreatedAt, PDO::PARAM_STR);
             $stmt->bindParam(':last_updated_at', $nullValue, PDO::PARAM_NULL);
-            if ($stmt) {
-                echo "Statement prepared successfully";
-            } else {
-                echo "Statement preparation failed";
-            }
-            if ($stmt->execute()) {
-                echo "executed statement: " . $sql;
-            } else {
-                echo "Failed to execute query";
-                print_r($stmt->errorInfo()); // Prints detailed error info from PDO
-            }
-            echo "executed statement" . $sql;
+            $stmt->execute();
 
             return $conn->lastInsertId();
         } catch (PDOException $e) {

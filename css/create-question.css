@@ -31,7 +31,7 @@ body {
 
 .header-create-button-container {
   display: flex;
-  flex-direction: 8px;
+  flex-direction: row;
   gap: 10px;
   align-items: center;
   padding: 4px 12px;
@@ -128,17 +128,6 @@ body {
   line-height: inherit;
   padding: 0;
   overflow: hidden;
-}
-
-.form-divider {
-  opacity: 0.6;
-  border-width: 0px 0px 1px;
-  border-image: initial;
-  border-color: rgb(225, 235, 229);
-  border-style: solid;
-  width: 100%;
-  margin-top: 12px;
-  margin-bottom: 12px;
 }
 
 .true-false-container {

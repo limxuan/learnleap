@@ -75,3 +75,14 @@
 .radio-input:focus + .radio-btn {
   outline: 2px solid rgba(0, 0, 0, 0.2);
 }
+
+.form-divider {
+  opacity: 0.6;
+  border-width: 0px 0px 1px;
+  border-image: initial;
+  border-color: rgb(225, 235, 229);
+  border-style: solid;
+  width: 100%;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
