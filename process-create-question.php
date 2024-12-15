@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "function call starting";
     $questionId = Database::saveQuestion($quizId, $question, $questionType, $correctAnswers, $wrongAnswer, $questionCreatedAt);
     echo "Created new " . $questionId;
+    header("Location: edit-quiz.php?quiz_id=" . $quizId);
 } else {
     echo "Invalid request. (not submitted by POST)";
 }

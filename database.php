@@ -1,5 +1,7 @@
 <?php
 
+include_once('utils.php');
+
 class Database
 {
     private static $conn = null;
@@ -166,4 +168,109 @@ class Database
             return 0;
         }
     }
+
+    public static function getStudentByEmail($email): array
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT * FROM STUDENT WHERE student_email = :email";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$user) {
+                return [];
+            }
+
+            return $user;
+        } catch (PDOException $e) {
+            throw new Exception("Failed to fetch student. Please try again later.");
+        } catch (Exception $e) {
+            echo "General Error: " . $e->getMessage(); // Catch general errors
+            return 0;
+        }
+    }
+
+    public static function getLecturerByEmail($email): array
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT * FROM LECTURER WHERE lecturer_email = :email";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$user) {
+                return [];
+            }
+
+            return $user;
+        } catch (PDOException $e) {
+            throw new Exception("Failed to fetch lecturer. Please try again later.");
+        } catch (Exception $e) {
+            echo "General Error: " . $e->getMessage(); // Catch general errors
+            return 0;
+        }
+    }
+
+    public static function createStudent($email, $password, $name): int
+    {
+        try {
+            $conn = self::getConnection();
+
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $createdAt = getCurrentTimestamp();
+            $sql = "INSERT INTO STUDENT (student_name, student_email, student_password, student_created_at) 
+                VALUES (:name, :email, :password, :created_at)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+            $stmt->bindParam(':created_at', $createdAt, PDO::PARAM_STR);
+
+
+            if ($stmt->execute()) {
+                return $conn->lastInsertId();
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Database Error: " . $e->getMessage();
+            return false;
+        } catch (Exception $e) {
+            echo "General Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function createLecturer($email, $password, $name): int
+    {
+        try {
+            $conn = self::getConnection();
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $createdAt = getCurrentTimestamp();
+            $sql = "INSERT INTO LECTURER (lecturer_name, lecturer_email, lecturer_password, lecturer_created_at) 
+                VALUES (:name, :email, :password, :created_at)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+            $stmt->bindParam(':created_at', $createdAt, PDO::PARAM_STR);
+
+
+            if ($stmt->execute()) {
+                return $conn->lastInsertId();
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Database Error: " . $e->getMessage();
+            return false;
+        } catch (Exception $e) {
+            echo "General Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
 }
