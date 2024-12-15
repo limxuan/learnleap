@@ -104,4 +104,61 @@ class Database
     {
         return ['heh', "hojo"];
     }
+
+    /*
+    * Saves a new question to the database.
+    *
+    * @param int $quizId The ID of the quiz to which the question belongs.
+    * @param string $question The text of the question.
+    * @param string $questionType The type of the question (short-text, mcq, true-false).
+    * @param string $correctAnswers The correct answers for the question.
+    * @param string $wrongAnswers The wrong answers for the question.
+    * @param string $questionCreatedAt The timestamp when the question is created (format: Y-m-d H:i:s).
+    * @return int The ID of the newly inserted question.
+    * @throws Exception If the query fails to execute.
+    * */
+    public static function saveQuestion($quizId, $question, $questionType, $correctAnswers, $wrongAnswers, $questionCreatedAt): int
+    {
+        echo "save question called" . $quizId . $question . $questionType . $correctAnswers . $wrongAnswers . $questionCreatedAt;
+        try {
+            $conn = self::getConnection();
+            $sql = "INSERT INTO `Questions` 
+                (`quiz_id`, `question_text`, `question_type`, `correct_answers`, `wrong_answers`, `answer_percentage`, `question_created_at`, `last_updated_at`) 
+                VALUES 
+                (:quiz_id, :question_text, :question_type, :correct_answers, :wrong_answers, :answer_percentage, :question_created_at, :last_updated_at)";
+
+            $stmt = $conn->prepare($sql);
+            $nullValue = null;
+
+            echo "Before bindParam.";
+            $stmt->bindParam(':quiz_id', $quizId, PDO::PARAM_INT);
+            $stmt->bindParam(':question_text', $question, PDO::PARAM_STR);
+            $stmt->bindParam(':question_type', $questionType, PDO::PARAM_STR);
+            $stmt->bindParam(':correct_answers', $correctAnswers, PDO::PARAM_STR);
+            $stmt->bindParam(':wrong_answers', $wrongAnswers, PDO::PARAM_STR);
+            $stmt->bindParam(':answer_percentage', $nullValue, PDO::PARAM_NULL);
+            $stmt->bindParam(':question_created_at', $questionCreatedAt, PDO::PARAM_STR);
+            $stmt->bindParam(':last_updated_at', $nullValue, PDO::PARAM_NULL);
+            if ($stmt) {
+                echo "Statement prepared successfully";
+            } else {
+                echo "Statement preparation failed";
+            }
+            if ($stmt->execute()) {
+                echo "executed statement: " . $sql;
+            } else {
+                echo "Failed to execute query";
+                print_r($stmt->errorInfo()); // Prints detailed error info from PDO
+            }
+            echo "executed statement" . $sql;
+
+            return $conn->lastInsertId();
+        } catch (PDOException $e) {
+            echo "Database Error in addQuiz: " . $e->getMessage();
+            throw new Exception("Failed to add quiz. Please try again later.");
+        } catch (Exception $e) {
+            echo "General Error: " . $e->getMessage(); // Catch general errors
+            return 0;
+        }
+    }
 }

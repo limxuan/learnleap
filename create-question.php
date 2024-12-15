@@ -6,7 +6,7 @@ if (isset($_GET['quiz_id'])) {
     $quizId = $_GET['quiz_id'];  // Access the 'id' query parameter
     $lecturerId = $_SESSION['lecturer_id'];
     $questions = Database::getQuestionsForQuiz($quizId);
-
+    $redirectTo = "process-create-question.php?quiz_id=" . $quizId;
 } else {
     header("Location: login.php");
     exit();
@@ -60,7 +60,7 @@ if (isset($_GET['quiz_id'])) {
         </div>
         <div class="question-form-container" id="st-form-container">
           <!-- Short Text Form -->
-          <form id="short-text-form" class="question-form" action="process-create-question.php" method="POST">
+          <form id="short-text-form" class="question-form" action=<?php echo $redirectTo ?> method="POST">
             <input type="hidden" name="question-type" value="short-text">
 
             <div class="question-input-container">
@@ -77,7 +77,7 @@ if (isset($_GET['quiz_id'])) {
           </form>
 
           <!-- Multiple Choice (MCQ) Form -->
-          <form id="mcq-form" class="question-form" action="process-create-question.php" method="POST">
+          <form id="mcq-form" class="question-form" action=<?php echo $redirectTo ?> method="POST">
             <input type="hidden" name="question-type" value="mcq">
 
             <div class="question-input-container">
@@ -104,7 +104,7 @@ if (isset($_GET['quiz_id'])) {
           </form>
 
           <!-- True or False Form -->
-          <form id="true-or-false-form" class="question-form" action="process-create-question.php" method="POST">
+          <form id="true-or-false-form" class="question-form" action=<?php echo $redirectTo ?> method="POST">
             <input type="hidden" name="question-type" value="true-false">
 
             <div class="question-input-container">
