@@ -1,10 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include "database.php";
-
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$perPage = 3;
-
-$quizzes = Database::getQuizData();
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +11,7 @@ $quizzes = Database::getQuizData();
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Explore</title>
+   <title>Private Quiz</title>
 
    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css">
@@ -27,6 +25,9 @@ $quizzes = Database::getQuizData();
       }
 
       body {
+         color: var(--text-color);
+         background: var(--bg-color);
+         padding-top: 110px;
          transition: opacity 0.5s ease;
       }
 
@@ -38,7 +39,6 @@ $quizzes = Database::getQuizData();
          text-decoration: none;
          border: none;
          outline: none;
-         gap: 10px;
          font-family: 'Montserrat', sans-serif;
       }
 
@@ -53,18 +53,6 @@ $quizzes = Database::getQuizData();
          --h1-font: 6rem;
          --h2-font: 3rem;
          --p-font: 1rem;
-      }
-
-      body {
-         color: var(--text-color);
-         background: var(--bg-color);
-         padding-top: 110px;
-         transition: opacity 0.5s ease;
-      }
-
-      .fade-out {
-         opacity: 0;
-         transition: opacity 0.5s ease;
       }
 
       header {
@@ -133,68 +121,53 @@ $quizzes = Database::getQuizData();
          border-color: var(--main-color);
       }
 
-      .explore-content {
-         text-align: center;
-         padding: 40px 20px;
-      }
-
-      .explore-content h1 {
-         font-size: 42px;
-         font-weight: 700;
-         margin-bottom: 20px;
-         color: #000;
-      }
-
-      .explore-cards {
+      .input-container {
          display: flex;
-         flex-direction: column;
-         gap: 50px;
-         justify-content: center;
          align-items: center;
-         margin-top: 20px;
-      }
-
-      .mostPlayed {
-         display: grid;
-         grid-template-columns: repeat(3, 1fr);
-         justify-content: center;
-         align-items: center;
-         gap: 70px;
-         margin: 20px 0;
-      }
-
-      @media only screen and (max-width: 768px) {
-         .mostPlayed {
-            grid-template-columns: repeat(2, 1fr);
-         }
-      }
-
-      @media only screen and (max-width: 480px) {
-         .mostPlayed {
-            grid-template-columns: 1fr;
-         }
-      }
-
-      .button {
-         width: 220px;
-         height: 220px;
-         font-size: 16px;
-         background-color: #60a1b3;
-         color: #000;
-         border: 2px solid transparent;
-         border-radius: 5px;
-         cursor: pointer;
-         transition: all .50s ease;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-      }
-
-      .button:hover {
-         transform: translateX(10px);
          border: 2px solid #000;
-         background: #90e0d2;
-         color: #3c3d3c;
+         border-radius: 20px;
+         padding: 8px 12px;
+         max-width: 350px;
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+         margin: 0 auto;
+         margin-top: 250px;
+         transition: transform 0.3s ease;
+      }
+
+      .input-container input {
+         border: none;
+         outline: none;
+         flex: 1;
+         font-size: 1rem;
+         color: #555;
+      }
+
+      .input-container button {
+         background: none;
+         border: 2px solid #000;
+         border-radius: 8px;
+         cursor: pointer;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         width: 32px;
+         height: 32px;
+         margin-left: 8px;
+      }
+
+      .input-container button:hover {
+         transform: scale(1.2);
+      }
+
+      .input-container button::before {
+         content: '\2713';
+         font-size: 1rem;
+         color: #555;
+         transition: color 0.3s ease;
+      }
+
+      .input-container button:hover::before {
+         color: #000;
       }
    </style>
 </head>
@@ -203,7 +176,7 @@ $quizzes = Database::getQuizData();
    <header>
       <a href="" class="logo">Learn<span>leap</a>
       <ul class="navbar">
-         <li><a href="">Home</a></li>
+         <li><a href="explore.php">Home</a></li>
          <li><a href="explore.php">Explore</a></li>
          <li><a href="join-code.php">Join Code</a></li>
          <li><a href="">Contact</a></li>
@@ -213,22 +186,48 @@ $quizzes = Database::getQuizData();
          <input type="text" placeholder="Search">
       </div>
    </header>
-   <div class="explore-content">
-      <h1>Quizies</h1>
-      <div class="explore-cards">
-         <div class="mostPlayed">
-            <?php
-            if (!empty($quizzes)) {
-                foreach ($quizzes as $quiz) {
-                    echo '<a href="join-quiz.php?quiz_id=' . $quiz['quiz_id'] . '" class="button">' . $quiz['quiz_name'] . '</a>';
-                }
-            } else {
-                echo '<p>No quizzes found.</p>';
-            }
-?>
-         </div>
+
+   <form method="POST">
+      <div class="input-container">
+         <input type="text" name="join_code" placeholder="Enter join code">
+         <button type="submit"></button>
       </div>
-   </div>
+   </form>
+   <?php
+   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+       if (!empty($_POST['join_code'])) {
+           $join_code = strtoupper($_POST['join_code']);
+
+           echo "<p>Join code: $join_code</p>";
+
+           if (strlen($join_code) == 8) {
+               $sql = "SELECT * FROM Quiz WHERE join_code = ?";
+               $conn = Database::getConnection();
+               $stmt = $conn->prepare($sql);
+               $stmt->bindParam(1, $join_code, PDO::PARAM_STR);
+               $stmt->execute();
+
+               // Fetch the result
+               $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+               echo "hello world";
+               echo "<script>console.log('im hjere')</script>";
+               if (count($result) > 0) {
+                   // TODO: redirect to join quiz page here
+                   echo "<script>console.log('Valid join code');</script>";
+               } else {
+                   echo "<script>alert('Invalid join code');</script>";
+               }
+
+               $stmt = null; // Close the statement
+               $conn = null;
+           } else {
+               echo  "<script>alert('Join code should be 8 characters')</script>";
+           }
+       } else {
+           echo  "<script>console.log('Please enter a join code')</script>";
+       }
+   }
+?>
 
    <script>
       document.querySelectorAll('a').forEach(link => {
