@@ -297,7 +297,6 @@ class Database
     public static function getLecturer($lec_id)
     {
         try {
-            echo "inside lecturer";
             $conn = self::getConnection();
             $sql = "SELECT * FROM LECTURER WHERE lecturer_id = :lec_id";
             $stmt = $conn->prepare($sql);
@@ -410,6 +409,160 @@ class Database
         } catch (PDOException $e) {
             echo "Database Error in getQuizById: " . $e->getMessage();
             throw new Exception("Failed to fetch quiz by ID. Please try again later.");
+        }
+    }
+    /**
+ * Retrieves all banned emails with user types (student or lecturer).
+ *
+ * @return array The list of banned emails and their user types as an associative array.
+ * @throws Exception If the query fails to execute.
+ */
+    public static function getAllBannedEmails(): array
+    {
+        try {
+            $conn = self::getConnection();
+
+            // Modified SQL query to fetch banned emails and user types
+            $sql = "
+            SELECT 
+                CASE 
+                    WHEN b.user_type = 'student' THEN s.student_email
+                    WHEN b.user_type = 'lecturer' THEN l.lecturer_email
+                END AS email,
+                b.user_type
+            FROM BannedUsers b
+            LEFT JOIN Student s ON b.student_id = s.student_id
+            LEFT JOIN Lecturer l ON b.lecturer_id = l.lecturer_id
+            WHERE b.user_type IN ('student', 'lecturer');
+        ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows as associative arrays
+        } catch (PDOException $e) {
+            echo "Database Error in getAllBannedEmails: " . $e->getMessage();
+            throw new Exception("Failed to fetch banned emails. Please try again later.");
+        }
+    }
+
+    /**
+ * Bans a user by inserting a record into the BannedUsers table.
+ *
+ * @param int $userId The ID of the user to ban.
+ * @param string $type The type of the user ('student' or 'lecturer').
+ * @param string $reason The reason for banning the user.
+ * @return bool True if the user was successfully banned, false otherwise.
+ * @throws Exception If the query fails to execute.
+ */
+    public static function banUser(int $userId, string $type, string $reason): bool
+    {
+        try {
+            $conn = self::getConnection();
+
+            // Determine user type and the corresponding ID
+            if ($type === 'student') {
+                $userColumn = 'student_id';
+                $userTable = 'Student';
+            } elseif ($type === 'lecturer') {
+                $userColumn = 'lecturer_id';
+                $userTable = 'Lecturer';
+            } else {
+                throw new Exception("Invalid user type. Must be 'student' or 'lecturer'.");
+            }
+
+            // Prepare SQL query to insert a ban record
+            $sql = "
+            INSERT INTO BannedUsers (admin_id, {$userColumn}, user_type, ban_reason)
+            VALUES (:admin_id, :user_id, :user_type, :ban_reason);
+        ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':admin_id', $_SESSION['admin_id'], PDO::PARAM_INT); // Assuming admin_id is stored in session
+            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->bindParam(':user_type', $type, PDO::PARAM_STR);
+            $stmt->bindParam(':ban_reason', $reason, PDO::PARAM_STR);
+
+            // Execute the query and check if it was successful
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Database Error in banUser: " . $e->getMessage();
+            throw new Exception("Failed to ban user. Please try again later.");
+        }
+    }
+
+    public static function getStudentsNotBanned(): array
+    {
+        try {
+            $conn = self::getConnection();
+
+            // SQL query to fetch students who are not banned
+            $sql = "
+            SELECT student_id, student_name, student_email
+            FROM Student
+            WHERE student_id NOT IN (SELECT student_id FROM BannedUsers WHERE user_type = 'student')
+        ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all non-banned students
+        } catch (PDOException $e) {
+            echo "Database Error in getAllStudents: " . $e->getMessage();
+            throw new Exception("Failed to fetch students. Please try again later.");
+        }
+    }
+
+    public static function getLecturersWithoutAdmin(): array
+    {
+        try {
+            $conn = self::getConnection();
+
+            // SQL query to fetch lecturers where admin_id is NULL
+            $sql = "
+        SELECT lecturer_id, lecturer_name, lecturer_email, lecturer_created_at
+        FROM Lecturer
+        WHERE admin_id IS NULL
+        ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all lecturers without an admin
+        } catch (PDOException $e) {
+            echo "Database Error in getLecturersWithoutAdmin: " . $e->getMessage();
+            throw new Exception("Failed to fetch lecturers. Please try again later.");
+        }
+    }
+
+    public static function approveLecturer($lecturerId, $adminId)
+    {
+        try {
+            $conn = self::getConnection();
+
+            $sql = "UPDATE Lecturer SET admin_id = :admin_id WHERE lecturer_id = :lecturer_id AND admin_id IS NULL";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':admin_id', $adminId, PDO::PARAM_INT);
+            $stmt->bindParam(':lecturer_id', $lecturerId, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error approving lecturer: " . $e->getMessage();
+            throw new Exception("Failed to approve lecturer.");
+        }
+    }
+
+    public static function rejectLecturer($lecturerId, $adminId)
+    {
+        try {
+            $conn = self::getConnection();
+
+            $sql = "UPDATE Lecturers SET status = 'rejected' WHERE id = :lecturer_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':lecturer_id', $lecturerId, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error rejecting lecturer: " . $e->getMessage();
+            throw new Exception("Failed to reject lecturer.");
         }
     }
 }

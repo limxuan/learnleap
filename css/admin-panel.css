@@ -1,0 +1,233 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Main content styles */
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Topbar styles */
+.topbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.topbar h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Tab styles */
+.tab {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tab button {
+  background-color: #3498db;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 20px;
+  min-width: 200px;
+}
+
+.tab button:hover {
+  background-color: #2980b9;
+}
+
+.tab button.active {
+  background-color: #2980b9;
+}
+
+/* Tab content styles */
+.tabcontent {
+  display: none;
+  margin-top: 20px;
+}
+
+.tabcontent h2 {
+  font-size: 26px;
+  color: #333;
+  text-align: center;
+}
+
+/* User and Lecturer Card styles */
+.user-list,
+.lecturer-list {
+  margin-top: 20px;
+}
+
+.user-card,
+.lecturer-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-card h3,
+.lecturer-card h3 {
+  font-size: 22px;
+  color: #333;
+}
+
+.user-card p,
+.lecturer-card p {
+  font-size: 16px;
+  color: #7f8c8d;
+}
+
+/* Action buttons styles */
+.action-buttons {
+  margin-top: 20px;
+}
+
+.action-buttons button {
+  background-color: #3498db;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  min-width: 150px;
+}
+
+.action-buttons button:hover {
+  background-color: #2980b9;
+}
+
+/* Ban reason textarea */
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: none; /* Disable resizing */
+  transition: border-color 0.3s;
+}
+
+textarea:focus {
+  border-color: #3498db;
+}
+
+/* Button for banning a user */
+button#ban-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+  min-width: 150px;
+  transition: background-color 0.3s;
+}
+
+button#ban-button:hover {
+  background-color: #c0392b;
+}
+
+/* Input fields, selects, and buttons styling */
+input,
+select,
+button,
+textarea {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus,
+button:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 18px;
+  padding: 12px 20px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .topbar h1 {
+    font-size: 20px;
+  }
+
+  .tab button {
+    padding: 12px 20px;
+    font-size: 16px;
+    min-width: 150px;
+  }
+
+  .user-card,
+  .lecturer-card {
+    padding: 15px;
+  }
+
+  .action-buttons button {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  .ban-button,
+  .approve-button,
+  .reject-button {
+    padding: 12px 20px;
+  }
+}

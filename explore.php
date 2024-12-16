@@ -15,7 +15,6 @@ $quizzes = Database::getQuizData();
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Explore</title>
 
-   <link rel="stylesheet" href="styles.css">
    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css">
    <style>

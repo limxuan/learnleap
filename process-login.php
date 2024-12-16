@@ -2,26 +2,26 @@
 
 include_once('database.php');
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Retrieve form data
     $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    // form validation
+    // Form validation
     if (empty($email) || empty($password)) {
         die("Both email and password are required!");
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         die("Invalid email format!");
     }
-    // check role
+
+    // Check role
     $role = $_POST['role'] ?? '';
     if (empty($role)) {
         die("Please select a role!");
     }
 
-    // determine role
+    // Determine role
     if ($role === 'student') {
         $user = Database::getStudentByEmail($email);
     } elseif ($role === 'lecturer') {
@@ -30,9 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Invalid role selected!");
     }
 
-    // user check
+    // Get all banned emails
+    $bannedEmails = Database::getAllBannedEmails();
+    $bannedEmailsList = array_column($bannedEmails, 'email'); // Extract emails from the result
+
+    // Check if the user email is banned
+    if (in_array($email, $bannedEmailsList)) {
+        echo "Your account has been banned. Please contact support.";
+        exit;  // Stop further execution
+    }
+
+    // Check if user exists
     if ($user) {
-        // pw verification
+        // For student login
         if ($role === 'student' && password_verify($password, $user['student_password'])) {
             // Start session and set session variables
             session_start();
@@ -40,8 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = 'student';
             echo "Login successful! Welcome, " . $user['student_name'];
             header("Location: explore.php");
-        } elseif ($role === 'lecturer' && password_verify($password, $user['lecturer_password'])) {
-            // start session
+        }
+        // For lecturer login
+        elseif ($role === 'lecturer' && password_verify($password, $user['lecturer_password'])) {
+            // Check if the lecturer is approved by admin
+            if ($user['admin_id'] === null) {
+                echo "Your account has not been approved by an admin yet. Please contact support.";
+                exit;
+            }
+
+            // Start session and set session variables
             session_start();
             $_SESSION['lecturer_id'] = $user['lecturer_id'];
             $_SESSION['role'] = 'lecturer';
