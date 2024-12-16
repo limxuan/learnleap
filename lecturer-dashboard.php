@@ -222,12 +222,12 @@ $average_score = Database::calculateAverageScoresByLecturer($lec_id);
         <h2 style="font-size: 36px; margin-bottom: 30px;">Quiz Management</h2>
         <div>
           <button onclick="window.location.href='create-quiz.php'" 
-            style="padding: 40px 80px; margin: 30px 0; font-size: 30px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 12px; 
+            style="padding: 40px 80px; margin: 30px 0; font-size: 30px; cursor: pointer; background-color: #2d6a4f; color: white; border: none; border-radius: 12px; 
             transition: transform 0.3s ease, background-color 0.3s ease; width: 100%;">
             Create Quiz
           </button>
           <button onclick="window.location.href='lecturer-view-quiz.php'" 
-            style="padding: 40px 80px; margin: 30px 0; font-size: 30px; cursor: pointer; background-color: #2196F3; color: white; border: none; border-radius: 12px; 
+            style="padding: 40px 80px; margin: 30px 0; font-size: 30px; cursor: pointer; background-color: #2d6a4f; color: white; border: none; border-radius: 12px; 
             transition: transform 0.3s ease, background-color 0.3s ease; width: 100%;">
             View Quizzes
           </button>

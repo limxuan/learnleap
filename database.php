@@ -38,7 +38,7 @@ class Database
  * @return array|false The quiz details as an associative array, or false if no quiz is found.
  * @throws PDOException If the query fails to execute.
  */
-    public static function getQuizById($quizId, $lecturerId): array | false
+    public static function getLecturerQuizById($quizId, $lecturerId): array | false
     {
         try {
             $conn = self::getConnection();
@@ -386,6 +386,30 @@ class Database
         } catch (PDOException $e) {
             echo "Database Error in getQuizData: " . $e->getMessage();
             throw new Exception("Failed to fetch quizzes. Please try again later.");
+        }
+    }
+
+    /**
+    * Retrieves quiz details by quiz ID.
+    *
+    * @param int $quizId The ID of the quiz to retrieve.
+    * @return array|false The quiz details as an associative array, or false if no quiz is found.
+    * @throws Exception If the query fails to execute.
+    */
+    public static function getQuizById($quizId): array | false
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT quiz_id, lecturer_id, quiz_name, description FROM `Quiz` WHERE quiz_id = :quiz_id";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':quiz_id', $quizId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Returns false if no quiz is found
+        } catch (PDOException $e) {
+            echo "Database Error in getQuizById: " . $e->getMessage();
+            throw new Exception("Failed to fetch quiz by ID. Please try again later.");
         }
     }
 }

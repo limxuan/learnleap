@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['student_id'] = $user['student_id'];
             $_SESSION['role'] = 'student';
             echo "Login successful! Welcome, " . $user['student_name'];
+            header("Location: explore.php");
         } elseif ($role === 'lecturer' && password_verify($password, $user['lecturer_password'])) {
             // start session
             session_start();

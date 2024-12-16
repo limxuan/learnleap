@@ -4,7 +4,7 @@ session_start();
 if (isset($_GET['quiz_id'])) {
     $quizId = $_GET['quiz_id'];  // Access the 'id' query parameter
     $lecturerId = $_SESSION['lecturer_id'];
-    $quiz = Database::getQuizById($quizId, $lecturerId);
+    $quiz = Database::getLecturerQuizById($quizId, $lecturerId);
     if (!$quiz) {
         echo "Quiz not found.";
         exit();
