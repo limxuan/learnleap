@@ -8,7 +8,7 @@ if (isset($_GET['quiz_id'])) {
     $questions = Database::getQuestionsForQuiz($quizId);
     $redirectTo = "process-create-question.php?quiz_id=" . $quizId;
 } else {
-    header("Location: login.php");
+    header("Location: login-register.php");
     exit();
 }
 ?>

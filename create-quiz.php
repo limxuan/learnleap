@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['lecturer_id'])) {
-    header("Location: login.php");
+    header("Location: login-register.php");
     exit;
 } else {
     $user_id = $_SESSION['lecturer_id'];
@@ -67,7 +67,12 @@ include_once 'navbar.php'; ?>
 const quizNameInput = document.getElementById('quiz-name-input');
 const quizDescriptionInput = document.getElementById('quiz-description-input');
 const visibilityRadios = document.querySelectorAll('input[name="quiz-visibility"]');
+const backArrow = document.querySelector('.backarrow');
 const button = document.querySelector('.btn');
+
+backArrow.addEventListener('click', () => {
+  window.location.href = 'lecturer-dashboard.php';
+})
 
 // Function to check if all required fields are filled
 function checkForm() {

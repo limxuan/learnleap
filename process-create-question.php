@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $quizId = isset($_GET['quiz_id']) ? $_GET['quiz_id'] : null;
     echo "<script>alert('Quiz ID: " . htmlspecialchars($quizId) . "');</script>";
     if (!$quizId) {
-        header("Location: login.php");
+        header("Location: login-register.php");
         exit();
     }
     $questionType = isset($_POST['question-type']) ? $_POST['question-type'] : null;

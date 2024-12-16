@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             session_start();
             $_SESSION['lecturer_id'] = $user['lecturer_id'];
             $_SESSION['role'] = 'lecturer';
-            echo "Login successful! Welcome, " . $user['lecturer_name'];
+            header("Location: lecturer-dashboard.php");
         } else {
             echo "Invalid password!";
         }

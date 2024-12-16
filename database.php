@@ -169,6 +169,29 @@ class Database
         }
     }
 
+    /*
+    * Retrieves quizzes created by a specific lecturer.
+    *
+    * @param int $lecturerId The ID of the lecturer.
+    * @return array An array of quiz data.
+    * @throws Exception If the query fails to execute.
+    * */
+    public static function getLecturerQuizzes($lecturerId): array
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT * FROM `Quiz` WHERE lecturer_id = :lecturerId";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':lecturerId', $lecturerId, PDO::PARAM_INT);
+            $stmt->execute();
+            $quizzes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $quizzes;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
     public static function getStudentByEmail($email): array
     {
         try {
@@ -181,7 +204,6 @@ class Database
             if (!$user) {
                 return [];
             }
-
             return $user;
         } catch (PDOException $e) {
             throw new Exception("Failed to fetch student. Please try again later.");
@@ -272,5 +294,75 @@ class Database
         }
     }
 
+    public static function getLecturer($lec_id)
+    {
+        try {
+            echo "inside lecturer";
+            $conn = self::getConnection();
+            $sql = "SELECT * FROM LECTURER WHERE lecturer_id = :lec_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':lec_id', $lec_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Database Error in getLecturer: " . $e->getMessage());
+            return false;
+        }
+    }
 
+    public static function getTotalQuizzesByLecturer($lec_id)
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT COUNT(*) AS total_quizzes FROM QUIZ WHERE lecturer_id = :lec_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':lec_id', $lec_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total_quizzes'];
+        } catch (PDOException $e) {
+            error_log("Database Error in getTotalQuizzesByLecturer: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public static function getTotalStudentsByLecturer($lec_id)
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "
+                SELECT COUNT(DISTINCT QUIZATTEMPT.student_id) AS total_students
+                FROM QUIZATTEMPT
+                INNER JOIN QUIZ ON QUIZATTEMPT.quiz_id = QUIZ.quiz_id
+                WHERE QUIZ.lecturer_id = :lec_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':lec_id', $lec_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total_students'];
+        } catch (PDOException $e) {
+            error_log("Database Error in getTotalStudentsByLecturer: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public static function calculateAverageScoresByLecturer($lec_id)
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "
+                SELECT AVG(QUIZATTEMPT.score) AS avg_score
+                FROM QUIZATTEMPT
+                INNER JOIN QUIZ ON QUIZATTEMPT.quiz_id = QUIZ.quiz_id
+                WHERE QUIZ.lecturer_id = :lec_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':lec_id', $lec_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['avg_score'];
+        } catch (PDOException $e) {
+            error_log("Database Error in calculateAverageScoresByLecturer: " . $e->getMessage());
+            return 0;
+        }
+    }
 }

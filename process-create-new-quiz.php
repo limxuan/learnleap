@@ -17,7 +17,7 @@ if (isset($_POST['quiz-name']) && isset($_POST['quiz-description']) && isset($_P
     $newQuizId = Database::addQuiz($lecturerId, $quizName, $quizDescription, $visibility, $joinCode, $quizCreatedAt);
     echo "New quiz added successfully!" . $newQuizId;
 
-    header("Location: /learnleap/edit-quiz.php?quiz_id=" . $newQuizId);
+    header("Location: lecturer-view-quiz.php");
     exit();
 
 } else {
