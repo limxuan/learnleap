@@ -17,12 +17,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Invalid email format!");
     }
 
-    if ($role === 'student') {
-        Database::createStudent($email, $password, $name);
-    } elseif ($role === 'lecturer') {
-        Database::createLecturer($email, $password, $name);
+    $lecturer = Database::getLecturerByEmail($email);
+
+    $student = Database::getStudentByEmail($email);
+
+
+    if (!empty($lecturer) || !empty($student)) {
+        echo "This email is already registered. Please choose another one.";
     } else {
-        die("Invalid role selected!");
+        echo "Email is available. Proceeding with account creation...";
+        if ($role === 'student') {
+            Database::createStudent($email, $password, $name);
+        } elseif ($role === 'lecturer') {
+            Database::createLecturer($email, $password, $name);
+        } else {
+            die("Invalid role selected!");
+        }
+        header("Location: login-register.php");
     }
-    header("Location: login-register.php");
+
+
 }
