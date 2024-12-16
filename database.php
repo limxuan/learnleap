@@ -565,4 +565,32 @@ class Database
             throw new Exception("Failed to reject lecturer.");
         }
     }
+    public static function getQuizJoinCode($quiz_id)
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT join_code FROM Quiz WHERE quiz_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $quiz_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    // Method to get all questions for a quiz
+    public static function getQuizQuestions($quiz_id)
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT * FROM Questions WHERE quiz_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $quiz_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 }

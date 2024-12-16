@@ -213,6 +213,7 @@ include "database.php";
                echo "<script>console.log('im hjere')</script>";
                if (count($result) > 0) {
                    // TODO: redirect to join quiz page here
+                   header('Location: join-quiz.php');
                    echo "<script>console.log('Valid join code');</script>";
                } else {
                    echo "<script>alert('Invalid join code');</script>";
