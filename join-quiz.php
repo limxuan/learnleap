@@ -295,7 +295,7 @@ if ($quiz) {
 ?>
 
       <!-- TODO: add redirect quiz attempmt here -->
-      <a href="" class="start-button">START <span>&rarr;</span></a>
+      <a href="quiz_form.php?quiz_id=<?php echo $quiz['quiz_id']; ?>" class="start-button">START <span>&rarr;</span></a>
    </div>
 
    <script>

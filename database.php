@@ -94,7 +94,6 @@ class Database
         }
     }
 
-    // TODO: finish getquestionsforquiz
     /**
     * Retrieves questions for a specific quiz.
     *

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -212,9 +213,9 @@ include "database.php";
                echo "hello world";
                echo "<script>console.log('im hjere')</script>";
                if (count($result) > 0) {
-                   // TODO: redirect to join quiz page here
-                   header('Location: join-quiz.php');
-                   echo "<script>console.log('Valid join code');</script>";
+                   $quiz_id = $result[0]['quiz_id'];
+                   header("Location: quiz_form.php?quiz_id=$quiz_id");
+                   exit();
                } else {
                    echo "<script>alert('Invalid join code');</script>";
                }
