@@ -365,4 +365,27 @@ class Database
             return 0;
         }
     }
+    /**
+    * Retrieves all quizzes from the database.
+    *
+    * @return array An array of quiz data.
+    * @throws Exception If the query fails to execute.
+    */
+    public static function getQuizData(): array
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT quiz_id, lecturer_id, quiz_name, description FROM `Quiz`";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            $quizzes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $quizzes;
+        } catch (PDOException $e) {
+            echo "Database Error in getQuizData: " . $e->getMessage();
+            throw new Exception("Failed to fetch quizzes. Please try again later.");
+        }
+    }
 }
