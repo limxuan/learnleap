@@ -206,7 +206,7 @@ $quizzes = Database::getQuizData();
          <li><a href="">Home</a></li>
          <li><a href="explore.php">Explore</a></li>
          <li><a href="join-code.php">Join Code</a></li>
-         <li><a href="">Contact</a></li>
+         <li><a href="student-dashboard.php">Dashboard</a></li>
       </ul>
 
       <div class="h-right">

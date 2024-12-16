@@ -179,7 +179,7 @@ include "database.php";
          <li><a href="explore.php">Home</a></li>
          <li><a href="explore.php">Explore</a></li>
          <li><a href="join-code.php">Join Code</a></li>
-         <li><a href="">Contact</a></li>
+         <li><a href="student-dashboard">Dashboard</a></li>
       </ul>
 
       <div class="h-right">
