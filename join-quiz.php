@@ -264,7 +264,7 @@ $lecturerName = Database::getLecturer($quiz['lecturer_id'])['lecturer_name'];
       <ul class="navbar">
          <li><a href="explore.php">Home</a></li>
          <li><a href="explore.php">Explore</a></li>
-         <li><a href="join-code">Join Code</a></li>
+         <li><a href="join-code.php">Join Code</a></li>
          <li><a href="student-dashboard.php">Dashboard</a></li>
       </ul>
 
