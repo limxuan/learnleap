@@ -1,11 +1,12 @@
 <?php
+
 include('db_connect.php');
 
 $quiz_id = isset($_GET['quiz_id']) ? (int)$_GET['quiz_id'] : 0;
 
 if ($quiz_id > 0) {
     echo "<div style='display: flex; justify-content: center; align-items: center; height: 100vh;'>";
-        echo "<div style='padding: 20px; border: 1px solid #28a745; background-color: #d4edda; color: #155724; text-align: center; width: 90%; max-width: 600px;'>";
+    echo "<div style='padding: 20px; border: 1px solid #28a745; background-color: #d4edda; color: #155724; text-align: center; width: 90%; max-width: 600px;'>";
 
     echo '<h2 style="text-align: center; color: #343a40; margin-bottom: 20px;">Thank you for completing the quiz!<br>Please rate the difficulty of the quiz:</h2>';
 
@@ -32,6 +33,3 @@ if ($quiz_id > 0) {
     echo '</div>';
     echo '</div>';
 }
-
-$conn->close();
-?>

@@ -20,7 +20,7 @@ $email = "siewwengtim@example.com";
     <h2>LearnLeap</h2>
     <ul>
       <li><a href="student-dashboard.php">Home</a></li>
-      <li><a href="completed-quiz.php">Completed Quizzes</a></li>
+      <li><a href="completed_quiz.php">Completed Quizzes</a></li>
       <li><a href="profile.php" class="active">Profile</a></li>
     </ul>
   </div>

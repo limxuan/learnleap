@@ -592,4 +592,18 @@ class Database
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public static function getQuizAttempt($attempt_id)
+    {
+        try {
+            $conn = self::getConnection();
+            $sql = "SELECT * FROM QuizAttempt WHERE attempt_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $attempt_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 }

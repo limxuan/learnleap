@@ -142,7 +142,7 @@ if (isset($_GET['quiz_id'])) {
 
     // --- Textarea IDs ---
     const stTextareaIds = ['st-question', 'st-answer'];
-    const mcqTextareaIds = ['mcq-correct-answer', 'mcq-wrong-answer-1', 'mcq-wrong-answer-2', 'mcq-wrong-answer-3'];
+    const mcqTextareaIds = ['mcq-question', 'mcq-correct-answer', 'mcq-wrong-answer-1', 'mcq-wrong-answer-2', 'mcq-wrong-answer-3'];
     const trueFalseTextareaIds = ['tf-question-input'];
     const textareaIds = [...stTextareaIds, ...mcqTextareaIds, ...trueFalseTextareaIds];
 

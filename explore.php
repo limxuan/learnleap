@@ -95,6 +95,7 @@ $quizzes = Database::getQuizData();
 
       .navbar {
          display: flex;
+        text-decoration: none;
       }
 
       .navbar a {
@@ -102,6 +103,9 @@ $quizzes = Database::getQuizData();
          font-size: var(--p-font);
          font-weight: 500;
          margin: 15px 22px;
+         
+                 text-decoration: none;
+
          transition: all .40s ease;
       }
 

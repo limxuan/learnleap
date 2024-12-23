@@ -98,7 +98,7 @@
     <h2>LearnLeap</h2>
     <ul>
       <li><a href="student-dashboard.php">Home</a></li>
-      <li><a href="completed-quiz.php" class="active">Completed Quizzes</a></li>
+      <li><a href="completed_quiz.php" class="active">Completed Quizzes</a></li>
       <li><a href="profile.php">Profile</a></li>
     </ul>
   </div>

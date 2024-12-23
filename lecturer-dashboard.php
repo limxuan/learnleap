@@ -244,7 +244,20 @@ $average_score = Database::calculateAverageScoresByLecturer($lec_id);
                 <th>Email</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr>
+                <td>Siew Weng Tim</td>
+                <td>wt@gmail.com</td>
+              </tr>
+              <tr>
+                <td>Juin Khai</td>
+                <td>juinkhai@gmail.com</td>
+              </tr>
+              <tr>
+                <td>Yao Ren</td>
+                <td>yr@gmail.com</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

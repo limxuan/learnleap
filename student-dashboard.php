@@ -26,7 +26,7 @@ $total_quizzes = $stats['total_quizzes'] ?? 0;
   <div class="sidebar">
     <h2>LearnLeap</h2>
     <ul>
-      <li><a href="student_dashboard.php">Home</a></li>
+      <li><a href="student-dashboard.php">Home</a></li>
       <li><a href="completed_quiz.php">Completed Quizzes</a></li>
       <li><a href="profile.php">Profile</a></li>
     </ul>

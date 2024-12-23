@@ -302,13 +302,13 @@ if ($result_attempt && $row_attempt = mysqli_fetch_assoc($result_attempt)) {
     $chosen_answers = explode(';', $row_attempt['chosen_answer']);
 
     // Fetch correct answers for the quiz, ensure questions are ordered by ID
-    $sql_questions = "SELECT correct_answer FROM Questions WHERE quiz_id = $quiz_id ORDER BY question_id ASC";
+    $sql_questions = "SELECT correct_answers FROM Questions WHERE quiz_id = $quiz_id ORDER BY question_id ASC";
     $result_questions = mysqli_query($con, $sql_questions);
 
     if ($result_questions && mysqli_num_rows($result_questions) > 0) {
         $index = 0; // Track question index for chosen answers
         while ($question = mysqli_fetch_assoc($result_questions)) {
-            $correct_answer = trim(strtolower($question['correct_answer']));
+            $correct_answer = trim(strtolower($question['correct_answers']));
             $chosen_answer = trim(strtolower($chosen_answers[$index] ?? '')); // Handle potential missing answers
 
             // Check if chosen answer matches correct answer
@@ -419,7 +419,7 @@ if ($result->num_rows > 0) {
         <div id="Allquestion_container">
             <p>Total Correct&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Mistake&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <?php
-        $quiz_id = 1; // Dynamically set quiz_id
+        $quiz_id = 22; // Dynamically set quiz_id
 $attempt_data = []; // To hold all attempts for this quiz
 
 // Fetch all attempts for the given quiz_id
@@ -432,14 +432,14 @@ if ($result_attempts && mysqli_num_rows($result_attempts) > 0) {
     }
 
     // Fetch questions for the quiz
-    $sql_questions = "SELECT * FROM Question WHERE quiz_id = $quiz_id";
+    $sql_questions = "SELECT * FROM Questions WHERE quiz_id = $quiz_id";
     $result_questions = mysqli_query($con, $sql_questions);
 
     if ($result_questions && mysqli_num_rows($result_questions) > 0) {
         $question_index = 0;
         while ($question = mysqli_fetch_assoc($result_questions)) {
             $question_text = $question['question_text'];
-            $correct_answer = $question['correct_answer'];
+            $correct_answer = $question['correct_answers'];
             $question_type = $question['question_type'];
 
             $total_correct = 0;

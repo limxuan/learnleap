@@ -1,5 +1,4 @@
 <?php
-echo "hello";
 include('database.php');
 
 $quiz_id = isset($_GET['quiz_id']) ? (int) $_GET['quiz_id'] : 0;
@@ -305,4 +304,65 @@ if (!empty($questions_result)) {
         function startTimer() {
             timer = setInterval(function() {
                 seconds++;
-                let minutes
+                let minutes = Math.floor(seconds / 60);
+                let remainingSeconds = seconds % 60;
+                document.getElementById("timer").innerHTML = minutes + "m " + remainingSeconds + "s";
+            }, 1000); // Update every second
+        }
+
+        function stopTimer() {
+            document.getElementById("timer").innerHTML = "0" + "m " + "0" + "s";
+            clearInterval(timer); 
+        }
+
+        function submitQuiz() {
+            stopTimer();
+            let attemptedDuration = seconds; 
+            document.getElementById("attempted_duration").value = attemptedDuration;
+
+            document.getElementById("quiz_form").submit();
+        }
+
+        window.onload = function() {
+            stopTimer();
+            startTimer();
+        };
+    </script>
+<script>
+
+function openSettings() {
+    document.getElementById('settingsModal').style.display = 'block';
+}
+
+
+document.getElementById('muteBtn').addEventListener('click', function() {
+    var audio = document.getElementById('quizAudio');
+    if (audio.paused) {
+        audio.play();
+        this.textContent = 'Mute';
+    } else {
+        audio.pause();
+        this.textContent = 'Unmute';
+    }
+});
+
+window.onclick = function(event) {
+    if (event.target == document.getElementById('settingsModal')) {
+        document.getElementById('settingsModal').style.display = 'none';
+    }
+}
+
+document.getElementById('volume').addEventListener('input', function() {
+    var audio = document.getElementById('quizAudio');
+    audio.volume = this.value / 100; // Audio volume must be between 0 and 1
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var audio = document.getElementById('quizAudio');
+    var volumeSlider = document.getElementById('volume');
+    audio.volume = volumeSlider.value / 100; 
+});
+
+
+
+</script>
